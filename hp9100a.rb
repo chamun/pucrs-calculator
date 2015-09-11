@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 class HP9100A
-  OPERATORS = %w(+ * - / pop dup swap)
+  OPERATORS = %w(+ * - / pop dup swap cos sin)
 
   def initialize(input)
     @data = parse(input)
@@ -47,6 +47,14 @@ class HP9100A
   def swap
     @stack[-1], @stack[-2] = @stack[-2], @stack[1]
     nil
+  end
+
+  def cos
+    Math.cos(@stack.pop)
+  end
+
+  def sin
+    Math.sin(@stack.pop)
   end
 
   def parse(data)
