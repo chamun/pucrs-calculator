@@ -38,6 +38,3 @@ class HP9100A
     data.split(" ").map { |i| operator?(i) ? i : i.to_f }
   end
 end
-
-input = '2 3 /'
-puts "Result is: #{ HP9100A.calculate(input) }"
