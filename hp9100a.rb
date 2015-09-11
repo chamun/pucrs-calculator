@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
 
 class HP9100A
-  OPERATORS = %w(+ * - /)
+  OPERATORS = %w(+ * - / pop)
 
   def initialize(input)
     @data = parse(input)
+    @stack = []
   end
 
   def self.calculate(input)
@@ -13,15 +14,14 @@ class HP9100A
 
   def calculate
     operands = []
-    stack = []
 
     while @data.size != 0
-      result = @data.shift
-      result = apply(result, stack) if operator?(result)
-      stack << result
+      item = @data.shift
+      item = apply(item) if operator?(item)
+      @stack << item unless item.nil?
     end
 
-    stack.last
+    @stack.last
   end
 
   private
@@ -30,8 +30,14 @@ class HP9100A
     OPERATORS.include?(operator)
   end
 
-  def apply(operator, stack)
-    stack.pop(2).reverse.reduce(operator)  
+  def apply(operator)
+    send(operator)
+  rescue NoMethodError
+    @stack.pop(2).reverse.reduce(operator)
+  end
+
+  def pop
+    @stack.pop && nil
   end
 
   def parse(data)
