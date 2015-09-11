@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 class HP9100A
-  OPERATORS = %w(+ * - / pop dup)
+  OPERATORS = %w(+ * - / pop dup swap)
 
   def initialize(input)
     @data = parse(input)
@@ -42,6 +42,11 @@ class HP9100A
 
   def dup
     @stack.last
+  end
+
+  def swap
+    @stack[-1], @stack[-2] = @stack[-2], @stack[1]
+    nil
   end
 
   def parse(data)

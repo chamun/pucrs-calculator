@@ -11,7 +11,8 @@ describe HP9100A do
       [ '4 2 /', 0.5],
       [ '2 4 /', 2],
       [ '2 pop', nil],
-      [ '3 2 dup', 2]
+      [ '3 2 dup', 2],
+      [ '3 2 swap', 3]
     ]
 
     INPUTS.each do |input, result|
