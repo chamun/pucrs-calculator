@@ -14,7 +14,8 @@ describe HP9100A do
       [ '3 2 dup', 2],
       [ '3 2 swap', 3],
       [ "#{Math::PI / 2} cos", Math.cos(Math::PI / 2)],
-      [ "#{Math::PI / 2} sin", Math.sin(Math::PI / 2)]
+      [ "#{Math::PI / 2} sin", Math.sin(Math::PI / 2)],
+      [ "2 3 atan", Math.atan2(3, 2)]
     ]
 
     INPUTS.each do |input, result|
