@@ -2,7 +2,11 @@ require 'rspec'
 require_relative '../hp9100a.rb'
 
 describe HP9100A do
-  shared_context 'a calculation method' do
+  describe '#calculate' do
+    def calculation_with(input)
+      HP9100A.new(input).calculate
+    end
+
     INPUTS = [
       [ '2 2 +', 4.0],
       [ '2 4 *', 8.0],
@@ -27,19 +31,18 @@ describe HP9100A do
     end
   end
 
-  describe '#calculate' do
-    def calculation_with(input)
-      HP9100A.new(input).calculate
-    end
-
-    include_context 'a calculation method'
-  end
-
   describe '.calculate' do
-    def calculation_with(input)
-      HP9100A.calculate(input)
-    end
+    let(:input) { 'some input' }
 
-    include_context 'a calculation method'
+    it 'delegates to #create' do
+      hp9100a = double('hp9100a')
+      expect(hp9100a).to receive(:calculate)
+      expect(described_class).to(
+        receive(:new)
+          .with(input)
+          .and_return(hp9100a)
+      )
+      described_class.calculate(input)
+    end
   end
 end
