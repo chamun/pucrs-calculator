@@ -3,9 +3,12 @@
 class HP9100A
   OPERATORS = %w(+ * - / pop dup swap cos sin atan)
 
+  attr_reader :max_stack_size
+
   def initialize(input)
     @data = parse(input)
     @stack = []
+    @max_stack_size = 0
   end
 
   def self.calculate(input)
@@ -17,6 +20,7 @@ class HP9100A
       item = @data.shift
       item = apply(item) if operator?(item)
       @stack << item unless item.nil?
+      @max_stack_size = [@max_stack_size, @stack.size].max
     end
 
     @stack.last

@@ -106,6 +106,42 @@ describe HP9100A do
      end
   end
 
+  describe '#max_stack_size' do
+    shared_examples_for 'max stack size' do
+      it 'returns the maximum size for the internal stack' do
+        expect(subject.max_stack_size).to eq(expected_size)
+      end
+    end
+
+    before do
+      subject.calculate
+    end
+
+    context 'size 2' do
+      let(:input) { '2 2 +' }
+      let(:expected_size) { 2 }
+      include_examples 'max stack size'
+    end
+
+    context 'size 3' do
+      let(:input) { '2 2 dup ' }
+      let(:expected_size) { 3 }
+      include_examples 'max stack size'
+    end
+
+    context 'size 4' do
+      let(:input) { '2 2 2 2' }
+      let(:expected_size) { 4 }
+      include_examples 'max stack size'
+    end
+
+    context 'size 4 with empty stack' do
+      let(:input) { '2 2 2 2 pop pop pop pop' }
+      let(:expected_size) { 4 }
+      include_examples 'max stack size'
+    end
+  end
+
   describe '.calculate' do
     let(:input) { 'some input' }
 
