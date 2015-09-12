@@ -13,8 +13,6 @@ class HP9100A
   end
 
   def calculate
-    operands = []
-
     while @data.size != 0
       item = @data.shift
       item = apply(item) if operator?(item)
