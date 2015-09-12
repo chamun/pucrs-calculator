@@ -9,21 +9,11 @@ class HP9100A
     @data = parse(input)
     @stack = []
     @max_stack_size = 0
+    calculate
   end
 
   def self.calculate(input)
-    new(input).calculate
-  end
-
-  def calculate
-    while @data.size != 0
-      item = @data.shift
-      item = apply(item) if operator?(item)
-      @stack << item unless item.nil?
-      @max_stack_size = [@max_stack_size, @stack.size].max
-    end
-
-    @stack.last
+    new(input).stack_top
   end
 
   def stack_size
@@ -35,6 +25,15 @@ class HP9100A
   end
 
   private
+
+  def calculate
+    while @data.size != 0
+      item = @data.shift
+      item = apply(item) if operator?(item)
+      @stack << item unless item.nil?
+      @max_stack_size = [@max_stack_size, @stack.size].max
+    end
+  end
 
   def operator?(operator)
     OPERATORS.include?(operator)
