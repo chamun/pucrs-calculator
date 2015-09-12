@@ -178,6 +178,19 @@ describe HP9100A do
     end
   end
 
+  describe 'stack_top' do
+    let(:top) { 3 }
+    let(:input) { '1 2 3' }
+
+    before do
+      subject.calculate
+    end
+
+    it 'returns the top value of the stack' do
+      expect(subject.stack_top).to eq(top)
+    end
+  end
+
   describe '.calculate' do
     let(:input) { 'some input' }
 
