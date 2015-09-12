@@ -26,6 +26,10 @@ class HP9100A
     @stack.last
   end
 
+  def stack_size
+    @stack.size
+  end
+
   private
 
   def operator?(operator)
