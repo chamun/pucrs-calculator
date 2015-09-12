@@ -86,6 +86,24 @@ describe HP9100A do
        let(:result) { Math.atan2(3, 2) }
        include_examples 'an operation'
      end
+
+     describe 'a composed input' do
+       let(:input) { ' 1 2 3 + -' }
+       let(:result) { 4.0 }
+       include_examples 'an operation'
+     end
+
+     describe 'another composed input' do
+       let(:input) { ' 2 3 + 1 -' }
+       let(:result) { -4.0 }
+       include_examples 'an operation'
+     end
+
+     describe 'a complicated composed input' do
+       let(:input) { ' 1 2 3 4 5 + dup - 4 pop +' }
+       let(:result) { 3 }
+       include_examples 'an operation'
+     end
   end
 
   describe '.calculate' do
