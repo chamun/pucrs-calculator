@@ -77,28 +77,4 @@ describe HP9100A do
     end
   end
 
-  describe '.calculate' do
-    let(:input) { 'some input' }
-
-    it 'delegates to #create' do
-      double('hp9100a') do |hp9100a|
-        allow(hp9100a).to receive(:stack_top)
-        expect(described_class).to(
-          receive(:new)
-          .with(input)
-          .and_return(hp9100a)
-        )
-      end
-      described_class.calculate(input)
-    end
-
-    it 'returns the top value of the stack' do
-      double('hp9100a').tap do |hp9100a|
-        allow(hp9100a).to receive(:stack_top).and_return('top value')
-        allow(described_class).to receive(:new).and_return(hp9100a)
-      end
-
-      expect(described_class.calculate(input)).to eq('top value')
-    end
-  end
 end

@@ -12,10 +12,6 @@ class HP9100A
     calculate
   end
 
-  def self.calculate(input)
-    new(input).stack_top
-  end
-
   def stack_size
     @stack.size
   end
