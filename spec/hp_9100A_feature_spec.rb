@@ -1,8 +1,11 @@
 require 'rspec'
+require_relative 'support/tokenizer.rb'
 require_relative '../hp9100a.rb'
 
 describe 'Test cases' do
-  subject { HP9100A.new(input) }
+  include_context 'tokenizer'
+
+  subject { HP9100A.new }
 
   shared_examples_for 'an operation' do
     it 'yields the right result' do

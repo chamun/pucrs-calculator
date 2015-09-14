@@ -1,10 +1,11 @@
 require 'rspec'
+require_relative 'support/tokenizer.rb'
 require_relative '../hp9100a.rb'
 
 describe HP9100A do
-  subject { HP9100A.new(input) }
-
   describe '#max_stack_size' do
+    include_context 'tokenizer'
+
     shared_examples_for 'max stack size' do
       it 'returns the maximum size for the internal stack' do
         expect(subject.max_stack_size).to eq(expected_size)
@@ -37,6 +38,8 @@ describe HP9100A do
   end
 
   describe '#stack_size' do
+    include_context 'tokenizer'
+
     shared_examples_for 'stack size' do
       it 'returns the size of the internal stack' do
         expect(subject.stack_size).to eq(expected_size)
@@ -70,19 +73,16 @@ describe HP9100A do
 
   describe 'stack_top' do
     let(:top) { 3 }
-    let(:input) { '1 2 3' }
 
     it 'returns the top value of the stack' do
+      [1, 2, top].each { |i| subject.push(i) }
       expect(subject.stack_top).to eq(top)
     end
   end
 
   describe '#push' do
-    subject { HP9100A.new }
-
     shared_examples_for 'an operation' do
       it 'performs the operation' do
-        input.each { |i| subject.push(i) }
         expect(subject.stack_top).to eq(result)
       end
     end
@@ -100,26 +100,28 @@ describe HP9100A do
     end
 
     describe 'an operation' do
+      include_context 'tokenizer'
+
       context 'sum' do
-        let(:input) { [ '2', '2', '+' ] }
+        let(:input) { '2 2 +' }
         let(:result) { 4.0 }
         include_examples 'an operation'
       end
 
       context 'multiplication' do
-        let(:input) { [ '2', '4', '*' ] }
+        let(:input) {  '2 4 *'  }
         let(:result) { 8 }
         include_examples 'an operation'
       end
 
       context 'division' do
-        let(:input) { [ '2', '2', '/' ] }
+        let(:input) {  '2 2 /'  }
         let(:result) { 1 }
         include_examples 'an operation'
       end
 
       context 'subtraction' do
-        let(:input) { [ '2', '2', '/' ] }
+        let(:input) {  '2 2 /'  }
         let(:result) { 1 }
         include_examples 'an operation'
       end
