@@ -77,4 +77,52 @@ describe HP9100A do
     end
   end
 
+  describe '#push' do
+    subject { HP9100A.new }
+
+    shared_examples_for 'an operation' do
+      it 'performs the operation' do
+        input.each { |i| subject.push(i) }
+        expect(subject.stack_top).to eq(result)
+      end
+    end
+
+    describe 'a number' do
+      it 'is pushed to the top of the stack' do
+        subject.push(666)
+        expect(subject.stack_top).to eq(666)
+      end
+
+      it 'converts it to float' do
+        subject.push('666')
+        expect(subject.stack_top).to eq(666)
+      end
+    end
+
+    describe 'an operation' do
+      context 'sum' do
+        let(:input) { [ '2', '2', '+' ] }
+        let(:result) { 4.0 }
+        include_examples 'an operation'
+      end
+
+      context 'multiplication' do
+        let(:input) { [ '2', '4', '*' ] }
+        let(:result) { 8 }
+        include_examples 'an operation'
+      end
+
+      context 'division' do
+        let(:input) { [ '2', '2', '/' ] }
+        let(:result) { 1 }
+        include_examples 'an operation'
+      end
+
+      context 'subtraction' do
+        let(:input) { [ '2', '2', '/' ] }
+        let(:result) { 1 }
+        include_examples 'an operation'
+      end
+    end
+  end
 end

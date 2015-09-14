@@ -5,8 +5,8 @@ class HP9100A
 
   attr_reader :max_stack_size
 
-  def initialize(input)
-    @data = parse(input)
+  def initialize(input = '')
+    @data = input.split(' ').collect { |i| parse(i) }
     @stack = []
     @max_stack_size = 0
     calculate
@@ -18,6 +18,11 @@ class HP9100A
 
   def stack_top
     @stack.last
+  end
+
+  def push(input)
+    item = parse(input)
+    @stack << ( apply(item) || item )
   end
 
   private
@@ -36,6 +41,7 @@ class HP9100A
   end
 
   def apply(operator)
+    return nil unless operator?(operator)
     send(operator)
   rescue NoMethodError
     @stack.pop(2).reverse.reduce(operator)
@@ -67,6 +73,6 @@ class HP9100A
   end
 
   def parse(data)
-    data.split(" ").map { |i| operator?(i) ? i : i.to_f }
+    operator?(data) ? data : data.to_f
   end
 end
