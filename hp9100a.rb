@@ -40,7 +40,8 @@ class HP9100A
   end
 
   def swap
-    @stack[-1], @stack[-2] = @stack[-2], @stack[-1]
+    a, b = @stack.pop, @stack.pop
+    @stack.push(a, b)
     nil
   end
 
