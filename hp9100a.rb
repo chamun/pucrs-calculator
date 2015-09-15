@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
 class HP9100A
-  OPERATORS = %w(+ * - / pop dup swap cos sin atan)
-
   attr_reader :max_stack_size
 
   def initialize
@@ -20,25 +18,21 @@ class HP9100A
 
   def push(input)
     item = parse(input)
-    item = apply(item) if operator?(item)
     @stack << item unless item.nil?
     @max_stack_size = [@max_stack_size, @stack.size].max
   end
 
   private
 
-  def operator?(operator)
-    OPERATORS.include?(operator)
-  end
-
-  def apply(operator)
-    send(operator)
+  def parse(input)
+    send(input)
   rescue NoMethodError
-    @stack.pop(2).reverse.reduce(operator)
+    input.to_f
   end
 
   def pop
-    @stack.pop && nil
+    @stack.pop
+    nil
   end
 
   def dup
@@ -62,7 +56,19 @@ class HP9100A
     Math.atan2(@stack.pop, @stack.pop)
   end
 
-  def parse(data)
-    operator?(data) ? data : data.to_f
+  def +
+    @stack.pop + @stack.pop
+  end
+
+  def *
+    @stack.pop * @stack.pop
+  end
+
+  def -
+    @stack.pop - @stack.pop
+  end
+
+  def /
+    @stack.pop / @stack.pop
   end
 end

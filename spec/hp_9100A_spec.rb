@@ -72,10 +72,11 @@ describe HP9100A do
   end
 
   describe 'stack_top' do
+    include_context 'tokenizer'
     let(:top) { 3 }
+    let(:input) { "1 2 #{top}" }
 
     it 'returns the top value of the stack' do
-      [1, 2, top].each { |i| subject.push(i) }
       expect(subject.stack_top).to eq(top)
     end
   end
@@ -88,9 +89,8 @@ describe HP9100A do
     end
 
     describe 'a number' do
-      it 'is pushed to the top of the stack' do
-        subject.push(666)
-        expect(subject.stack_top).to eq(666)
+      it 'must be a string' do
+        expect { subject.push(666) }.to raise_error(TypeError)
       end
 
       it 'converts it to float' do
