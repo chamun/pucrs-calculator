@@ -28,6 +28,8 @@ Ex.:
 
 example input files are located under `input/`.
 
+**VERY IMPORTANT:** You'll need ruby 2.2. Previous versions have a bug on
+Math.atan2 when both arguments are +Infinity or -Infinity.
 
 ### How to test
 
