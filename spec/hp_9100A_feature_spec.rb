@@ -66,9 +66,17 @@ describe 'Test cases' do
   end
 
   describe 'swap' do
-    let(:input) { '3 2 swap' }
-    let(:result) { 3 }
-    include_examples 'an operation'
+    describe 'top element' do
+      let(:input) { '4 5 3 2 swap' }
+      let(:result) { 3 }
+      include_examples 'an operation'
+    end
+
+    describe 'top element - 1' do
+      let(:input) { '4 5 3 2 swap pop' }
+      let(:result) { 2 }
+      include_examples 'an operation'
+    end
   end
 
   describe 'cos' do
