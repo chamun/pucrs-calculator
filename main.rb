@@ -2,7 +2,7 @@
 
 require_relative './hp9100a.rb'
 
-puts "Usage: ./#{__FILE__} file1 file2 filen" if ARGV.size == 0
+puts "Usage: ruby #{__FILE__} file1 file2 filen" if ARGV.size == 0
 
 ARGV.each do |file|
   hp = HP9100A.new
