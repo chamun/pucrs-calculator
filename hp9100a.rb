@@ -17,14 +17,13 @@ class HP9100A
   end
 
   def push(input)
-    item = parse(input)
-    @stack << item unless item.nil?
+    @stack.push(* interpret(input))
     @max_stack_size = [@max_stack_size, @stack.size].max
   end
 
   private
 
-  def parse(input)
+  def interpret(input)
     send(input)
   rescue NoMethodError
     input.to_f
@@ -32,7 +31,7 @@ class HP9100A
 
   def pop
     @stack.pop
-    nil
+    @stack.pop
   end
 
   def dup
@@ -40,9 +39,7 @@ class HP9100A
   end
 
   def swap
-    a, b = @stack.pop, @stack.pop
-    @stack.push(a, b)
-    nil
+    [@stack.pop, @stack.pop]
   end
 
   def cos
